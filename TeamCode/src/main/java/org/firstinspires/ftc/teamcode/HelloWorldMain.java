@@ -5,17 +5,17 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.Mechanisms.Motors;
 
 @TeleOp(name = "Mecanum TeleOp", group = "TeleOp")
 public class HelloWorldMain extends OpMode {
 
-    DcMotor frontLeft, frontRight, backLeft, backRight;
-Motors motors = new Motors ();
+    DcMotor frontLeft, frontRight, backLeft, backRight, ballMotor;
     @Override
     public void init() {
         //balllauncher motor
-        motors.init(hardwareMap);
+        ballMotor = hardwareMap.get(DcMotor.class, "ballDestroyerMotor");
+        ballMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         // Map motors to hardware configuration
         frontLeft = hardwareMap.get(DcMotor.class, "motor67");
         frontRight = hardwareMap.get(DcMotor.class, "motor69");
@@ -37,8 +37,12 @@ Motors motors = new Motors ();
 
     @Override
     public void loop() {
-        //This is where our Balllauncher is
-        motors.setMotorSpeed(0.5);
+        //BALL LAUNCHER
+        double ballmotorspeed = gamepad1.a ? 1.0 : 0.0 ;
+        ballMotor.setPower(ballmotorspeed * -1);
+
+
+        //MECANUM DRIVETRAIN
         // Get joystick values
         double y = gamepad1.left_stick_y;     // Forward/Backward
         double x = -gamepad1.left_stick_x;    // Strafe Left/Right
