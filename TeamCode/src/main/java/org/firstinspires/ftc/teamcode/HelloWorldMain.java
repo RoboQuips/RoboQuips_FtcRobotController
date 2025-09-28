@@ -38,9 +38,9 @@ public class HelloWorldMain extends OpMode {
     @Override
     public void loop() {
         //BALL LAUNCHER
+        // ? = simple if/and statement
         double ballmotorspeed = gamepad1.a ? 1.0 : 0.0 ;
         ballMotor.setPower(ballmotorspeed * -1);
-
 
         //MECANUM DRIVETRAIN
         // Get joystick values
