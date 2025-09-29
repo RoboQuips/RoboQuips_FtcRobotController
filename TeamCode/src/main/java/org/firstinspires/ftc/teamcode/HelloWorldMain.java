@@ -9,12 +9,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp(name = "Mecanum TeleOp", group = "TeleOp")
 public class HelloWorldMain extends OpMode {
 
-    DcMotor frontLeft, frontRight, backLeft, backRight, ballMotor;
+    DcMotor frontLeft, frontRight, backLeft, backRight, ballMotor, sweepMotor;
     @Override
     public void init() {
         //balllauncher motor
         ballMotor = hardwareMap.get(DcMotor.class, "ballDestroyerMotor");
         ballMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //motormaster21 sweeps up ball
+        sweepMotor = hardwareMap.get(DcMotor.class, "motormaster21");
+       sweepMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Map motors to hardware configuration
         frontLeft = hardwareMap.get(DcMotor.class, "motor67");
@@ -40,7 +44,12 @@ public class HelloWorldMain extends OpMode {
         //BALL LAUNCHER
         // ? = simple if/and statement
         double ballmotorspeed = gamepad1.a ? 1.0 : 0.0 ;
-        ballMotor.setPower(ballmotorspeed * -1);
+        ballMotor.setPower(ballmotorspeed * 1);
+
+        //BALL sweeper
+        // ? = simple if/and statement
+        double sweepmotorspeed = gamepad1.b ? 1.0 : 0.0 ;
+        sweepMotor.setPower(sweepmotorspeed * 1);
 
         //MECANUM DRIVETRAIN
         // Get joystick values
